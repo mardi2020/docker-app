@@ -12,5 +12,16 @@ before_install:
 script:
   - docker run -e CI=true mardi/docker-app npm run test -- --coverage
 
-after_success:
-  - echo "Test Success"
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: ap-northeast-2
+  app: docker-app
+  env: Dockerapp-env
+  bucket_name: elasticbeanstalk-ap-northeast-2-238664715030
+  bucket_path: docker-app
+  on:
+    branch: main
+  
+  access_key_id: $AWS_ACCESS_KEY
+  sescret_access_key: $AWS_SECRET_ACCESS_KEY
